@@ -27,9 +27,9 @@ public class FracCalc {
         // TODO: Implement this function to produce the solution to the input
     	String[] fracStringArr = input.split(" "); 
     	//System.out.println(Arrays.toString(fracStringArr));
-        int[] alphaFracArr = convertToInt(fracStringArr[0]);
-        int[] bravoFracArr = convertToInt(fracStringArr[2]);
-        return ("whole:" + bravoFracArr[0] +" numerator:" + bravoFracArr[1] + " denominator:" + bravoFracArr[2]);
+        int[] alphaFrac = convertToInt(fracStringArr[0]);
+        int[] bravoFrac = convertToInt(fracStringArr[2]);
+        return ("whole:" + bravoFrac[0] +" numerator:" + bravoFrac[1] + " denominator:" + bravoFrac[2]);
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
@@ -45,7 +45,8 @@ public class FracCalc {
     	else { //Has Fraction
     		fraction[1] = Integer.parseInt(input.substring((underscoreIndex + 1), dashIndex));
     		fraction[2] = Integer.parseInt(input.substring((dashIndex + 1), input.length()));
-    	}
+    	} 
+    	//Following Conditionals to Set Whole Number
     	if (underscoreIndex > 0 && dashIndex > 0) { //Mixed Num
     		fraction[0] = Integer.parseInt(input.substring(0, underscoreIndex));
     	}
