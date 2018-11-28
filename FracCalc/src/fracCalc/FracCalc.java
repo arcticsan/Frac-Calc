@@ -38,19 +38,23 @@ public class FracCalc {
     	int[] fraction = new int[3];
     	int underscoreIndex = input.indexOf("_");
     	int dashIndex = input.indexOf("/");
-    	if (dashIndex == -1) {
+    	if (dashIndex == -1) { //No Fraction
     		fraction[1] = 0;
     		fraction[2] = 1;
     	}
-    	else {
+    	else { //Has Fraction
     		fraction[1] = Integer.parseInt(input.substring((underscoreIndex + 1), dashIndex));
     		fraction[2] = Integer.parseInt(input.substring((dashIndex + 1), input.length()));
     	}
-    	if (underscoreIndex == -1 && dashIndex == -1 ) {//Whole Num or Zero
+    	if (underscoreIndex > 0 && dashIndex > 0) { //Mixed Num
+    		fraction[0] = Integer.parseInt(input.substring(0, underscoreIndex));
+    	}
+    	else if (underscoreIndex == -1 && dashIndex == -1) { //No Fraction Just Whole Number
     		fraction[0] = Integer.parseInt(input.substring(0, input.length()));
     	}
-    	else if (underscoreIndex == -1) {
-    		fraction[0] = Integer.parseInt(input.substring(0, dashIndex));
+    	
+    	else { //Just Fraction
+    		fraction[0] = 0;
     	}
     	return fraction;
     	
