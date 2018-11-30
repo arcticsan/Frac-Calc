@@ -31,18 +31,19 @@ public class FracCalc {
         int[] bravoFrac = convertToInt(fracStringArr[2]);
         int[] answerArr = new int[2];
         if (fracStringArr[1].equals("*") == true) {
-        	answerArr = multiply(alphaFrac,bravoFrac);
+        	answerArr = reduce(multiply(alphaFrac,bravoFrac));
         }
         else if (fracStringArr[1].equals("/") == true) {
-        	answerArr = divide(alphaFrac,bravoFrac);
+        	answerArr = reduce(divide(alphaFrac,bravoFrac));
         }
         else if (fracStringArr[1].equals("+") == true) {
-        	//answerArr = multiply(alphaFrac,bravoFrac);
+        	answerArr = reduce(add(alphaFrac,bravoFrac));
         }
         else if (fracStringArr[1].equals("-") == true) {
-        	//answerArr = multiply(alphaFrac,bravoFrac);
+        	answerArr = reduce(subtract(alphaFrac,bravoFrac));
         }
-        return Arrays.toString(answerArr);
+        String answerStr = toMixed(answerArr);
+        return (answerStr);
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
@@ -84,20 +85,21 @@ public class FracCalc {
     	if (negative == true) {
     		improperFrac[0] = improperFrac[0] * -1;
     	}
+    	System.out.println(Arrays.toString(improperFrac));
     	return improperFrac;
     }
     public static int[] multiply(int[] alphaFrac, int[] bravoFrac) {
     	int[] productFrac = new int[2];
     	productFrac[0] = alphaFrac[0] * bravoFrac[0];
     	productFrac[1] = alphaFrac[1] * bravoFrac[1];
-    	System.out.println("Product: " + Arrays.toString(productFrac));
+    	//System.out.println("Product: " + Arrays.toString(productFrac));
     	return productFrac;
     }
     public static int[] divide(int[] alphaFrac, int[] bravoFrac) {
     	int[] quotientFrac = new int[2];
     	quotientFrac[0] = alphaFrac[0] * bravoFrac[1];
     	quotientFrac[1] = alphaFrac[1] * bravoFrac[0];
-    	System.out.println("Quotient: " + Arrays.toString(quotientFrac));
+    	//System.out.println("Quotient: " + Arrays.toString(quotientFrac));
     	return quotientFrac;
     }
     public static int[] subtract(int[] alphaFrac, int[] bravoFrac) {
@@ -114,12 +116,54 @@ public class FracCalc {
     	difference[1] = bravoFrac[1];
     	return difference;
     }
+    public static int[] add(int[] alphaFrac, int[] bravoFrac) {
+    	int[] sum = new int[2];
+    	if (alphaFrac[1] != bravoFrac[1]) {
+    		int alphaDenom = alphaFrac[1];
+        	int bravoDenom = bravoFrac[1];
+    		alphaFrac[0] = alphaFrac[0] * bravoDenom;
+    		alphaFrac[1] = alphaFrac[1] * bravoDenom;
+    		bravoFrac[0] = bravoFrac[0] * alphaDenom;
+    		bravoFrac[1] = bravoFrac[1] * alphaDenom;
+    	}
+    	sum[0] = alphaFrac[0] + bravoFrac[0];
+    	sum[1] = bravoFrac[1];
+    	return sum;
+    }
+    public static int[] reduce(int[] impropFrac) {
+    	int gcf = gcf(impropFrac[0], impropFrac[1]);
+    	if (gcf == 0 || gcf == 1) return impropFrac;
+    	impropFrac[0] = impropFrac[0] / gcf;
+    	impropFrac[1] = impropFrac[1] / gcf;
+    	return impropFrac;
+    }
+    public static String toMixed(int[] impropFrac) {
+    	int[] mixedFrac = {0,0,0};
+    	mixedFrac[2] = impropFrac[1];
+    	if(impropFrac[0] < impropFrac[1]) {
+    		mixedFrac[1] = impropFrac[0];
+    	}
+    	else {
+    		mixedFrac[1] = impropFrac[0] % impropFrac[1];
+    	}
+    	mixedFrac[0] = (impropFrac[0] - mixedFrac[1]) / impropFrac[1];
+    	String answerStr = "";
+    	if (mixedFrac[0] != 0) {
+    		answerStr = mixedFrac[0] + "";
+    	}
+    	if (mixedFrac[0] != 0 && mixedFrac[1] != 0) {
+    		answerStr = answerStr + "_";
+    	}
+    	if (mixedFrac[1] != 0) {
+    		answerStr = answerStr + mixedFrac[1] + "/" + mixedFrac[2];
+    	}
+    	return answerStr;
+    }
     public static int gcf(int number1, int number2) {
 		number1 = (int) (absValue(number1));
 		number2 = (int) (absValue(number2));
-		
 		if (number1 == 0 || number2 == 0) {
-			throw new IllegalArgumentException ("Sorry, there is no gcf for zero. Please enter a positive integer.");
+			return 0;
 		}
 		int lownum = (int) (min((double) number1, (double) number2));
 		int highnum = (int) (max(number1,number2));
@@ -127,7 +171,7 @@ public class FracCalc {
 		boolean factorable = (isDivisibleBy(highnum,factor));
 		while (factorable == false) {
 			factor--;
-			factorable = ( isDivisibleBy(highnum, factor) && ( isDivisibleBy(lownum, factor)));
+			factorable = (isDivisibleBy(highnum, factor) && (isDivisibleBy(lownum, factor)));
 		}
 		return (factor);
 	}
