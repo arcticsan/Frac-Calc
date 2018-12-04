@@ -42,7 +42,7 @@ public class FracCalc {
         else if (fracStringArr[1].equals("-") == true) {
         	answerArr = reduce(subtract(alphaFrac,bravoFrac));
         }
-        String answerStr = toMixed(answerArr);
+        String answerStr = toMixed(doubleNegative(answerArr));
         return (answerStr);
     }
 
@@ -99,7 +99,6 @@ public class FracCalc {
     	int[] quotientFrac = new int[2];
     	quotientFrac[0] = alphaFrac[0] * bravoFrac[1];
     	quotientFrac[1] = alphaFrac[1] * bravoFrac[0];
-    	//System.out.println("Quotient: " + Arrays.toString(quotientFrac));
     	return quotientFrac;
     }
     public static int[] subtract(int[] alphaFrac, int[] bravoFrac) {
@@ -138,14 +137,27 @@ public class FracCalc {
     	return impropFrac;
     }
     public static String toMixed(int[] impropFrac) {
-    	int[] mixedFrac = {0,0,0};
-    	mixedFrac[2] = impropFrac[1];
-    	if(impropFrac[0] < impropFrac[1]) {
-    		mixedFrac[1] = impropFrac[0];
+    	String answer = "";
+    	int numerator = absValue(impropFrac[0]);
+    	int denominator = impropFrac[1];
+    	int integer = 0;
+    	System.out.println("integer " + integer + "\nnumerator: " + numerator + "\ndenominator: " + denominator);
+    	if (numerator > denominator) {
+    		integer = (numerator/denominator);
+    		if (impropFrac[0] < 0) integer = integer * -1;
+    		if (denominator == 1) {
+    			numerator = 0;
+    			denominator = 0;
+    		}
+    		else numerator = numerator % denominator;
     	}
-    	else {
-    		mixedFrac[1] = impropFrac[0] % impropFrac[1];
-    	}
+    	System.out.println("\ninteger " + integer + "\nnumerator: " + numerator + "\ndenominator: " + denominator);
+    	if (integer != 0) answer = (answer + integer);
+    	if (integer != 0 && numerator != 0) answer = (answer + "_");
+    	if (numerator != 0) answer = (answer + numerator + "/" + denominator);
+    	if (answer.length() == 0) answer = "0";
+    	/*
+    	//Calculating Wholenum
     	mixedFrac[0] = (impropFrac[0] - mixedFrac[1]) / impropFrac[1];
     	String answerStr = "";
     	if (mixedFrac[0] != 0) {
@@ -157,7 +169,10 @@ public class FracCalc {
     	if (mixedFrac[1] != 0) {
     		answerStr = answerStr + mixedFrac[1] + "/" + mixedFrac[2];
     	}
-    	return answerStr;
+    	else {
+    		answerStr = "0";
+    	}*/
+    	return answer;
     }
     public static int gcf(int number1, int number2) {
 		number1 = (int) (absValue(number1));
@@ -200,11 +215,18 @@ public class FracCalc {
   		return test;
   	}
   	//returns absolute value of number
-  	public static double absValue(double number) {
+  	public static int absValue(int number) {
   		if (number < 0 ) {
   			return (number *-1);
   		}
   		else return (number);
+  	}
+  	public static int[] doubleNegative(int[] impropFrac) {
+  		if (impropFrac[0] < 0 && impropFrac[1] < 0) {
+  			impropFrac[0] = absValue(impropFrac[0]);
+  			impropFrac[1] = absValue(impropFrac[0]);
+  		}
+  		return impropFrac;
   	}
 }
     
