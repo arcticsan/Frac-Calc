@@ -1,3 +1,7 @@
+/* This class contains the methods to do various fraction related task.
+ * @author Bryan Chan
+ * @version 1 December 5, 2018
+ */
 package fracCalc;
 import java.util.*;
 public class FracCalc {
@@ -159,6 +163,11 @@ public class FracCalc {
     			denominator = 0;
     		}
     		else numerator = numerator % denominator;
+    	}
+    	else if (denominator == 1) {
+    		integer = numerator;
+    		numerator = 0;
+    		denominator = 0;
     	}
     	else {
     		if (impropFrac[0] < 0) numerator = numerator * -1;
