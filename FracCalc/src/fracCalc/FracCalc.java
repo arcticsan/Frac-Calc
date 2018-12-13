@@ -89,21 +89,18 @@ public class FracCalc {
     	if (negative == true) {
     		improperFrac[0] = improperFrac[0] * -1;
     	}
-    	System.out.println(Arrays.toString(improperFrac));
     	return improperFrac;
     }
     public static int[] multiply(int[] alphaFrac, int[] bravoFrac) {
     	int[] productFrac = new int[2];
     	productFrac[0] = alphaFrac[0] * bravoFrac[0];
     	productFrac[1] = alphaFrac[1] * bravoFrac[1];
-    	System.out.println("Product: " + Arrays.toString(productFrac));
     	return productFrac;
     }
     public static int[] divide(int[] alphaFrac, int[] bravoFrac) {
     	int[] quotientFrac = new int[2];
     	quotientFrac[0] = alphaFrac[0] * bravoFrac[1];
     	quotientFrac[1] = alphaFrac[1] * bravoFrac[0];
-    	System.out.println("Quotient: " + Arrays.toString(quotientFrac));
     	return quotientFrac;
     }
     public static int[] subtract(int[] alphaFrac, int[] bravoFrac) {
@@ -118,7 +115,6 @@ public class FracCalc {
     	}
     	difference[0] = alphaFrac[0] - bravoFrac[0];
     	difference[1] = bravoFrac[1];
-    	System.out.println("Difference: " + Arrays.toString(difference));
     	return difference;
     }
     public static int[] add(int[] alphaFrac, int[] bravoFrac) {
@@ -133,28 +129,22 @@ public class FracCalc {
     	}
     	sum[0] = alphaFrac[0] + bravoFrac[0];
     	sum[1] = bravoFrac[1];
-    	System.out.println("Sum: " + Arrays.toString(sum));
     	return sum;
     }
     public static int[] reduce(int[] fraction) {
-    	System.out.println("To Be Reduce: " + Arrays.toString(fraction));
     	int gcf = gcf(fraction[0], fraction[1]);
     	if (gcf == 0 || gcf == 1) {
-    		System.out.println("Reduce: " + Arrays.toString(fraction));
     		return fraction;
     	}
     	fraction[0] = fraction[0] / gcf;
     	fraction[1] = fraction[1] / gcf;
-    	System.out.println("Reduce: " + Arrays.toString(fraction));
     	return fraction;
     }
     public static String toMixed(int[] impropFrac) {
-    	System.out.println("impropFrac " + Arrays.toString(impropFrac));
     	String answer = "";
     	int numerator = absValue(impropFrac[0]);
     	int denominator = impropFrac[1];
     	int integer = 0;
-    	System.out.println("integer " + integer + "\nnumerator: " + numerator + "\ndenominator: " + denominator);
     	if (numerator > denominator) {
     		integer = (numerator/denominator);
     		if (impropFrac[0] < 0) integer = integer * -1;
@@ -172,27 +162,10 @@ public class FracCalc {
     	else {
     		if (impropFrac[0] < 0) numerator = numerator * -1;
     	}
-    	System.out.println("\ninteger " + integer + "\nnumerator: " + numerator + "\ndenominator: " + denominator);
     	if (integer != 0) answer = (answer + integer);
     	if (integer != 0 && numerator != 0) answer = (answer + "_");
     	if (numerator != 0) answer = (answer + numerator + "/" + denominator);
-    	if (answer.length() == 0) answer = "0";
-    	/*
-    	//Calculating Wholenum
-    	mixedFrac[0] = (impropFrac[0] - mixedFrac[1]) / impropFrac[1];
-    	String answerStr = "";
-    	if (mixedFrac[0] != 0) {
-    		answerStr = mixedFrac[0] + "";
-    	}
-    	if (mixedFrac[0] != 0 && mixedFrac[1] != 0) {
-    		answerStr = answerStr + "_";
-    	}
-    	if (mixedFrac[1] != 0) {
-    		answerStr = answerStr + mixedFrac[1] + "/" + mixedFrac[2];
-    	}
-    	else {
-    		answerStr = "0";
-    	}*/
+    	if (answer.length() == 0) answer = "0";  	
     	return answer;
     }
     public static int gcf(int number1, int number2) {
@@ -242,6 +215,7 @@ public class FracCalc {
   		}
   		else return (number);
   	}
+  	//this method moves negative out of denominator
   	public static int[] negativeChecker(int[] impropFrac) {
   		if ((impropFrac[0] * impropFrac[1]) > 0) {
   			impropFrac[0] = absValue(impropFrac[0]);
@@ -253,4 +227,3 @@ public class FracCalc {
   		return impropFrac;
   	}
 }
-    
