@@ -1,6 +1,6 @@
 /* This class contains the methods to do various fraction related task.
  * @author Bryan Chan
- * @version 1 December 5, 2018
+ * @version 1.0 December 13, 2018
  */
 package fracCalc;
 import java.util.*;
